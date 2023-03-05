@@ -45,7 +45,7 @@ public class SpotifyRepository {
 
     public Artist createArtist(String name) {
         for(Artist art : artists){
-            if(art.getName()==name)
+            if(art.getName().equals(name))
                 return art;
         }
         Artist a = new Artist(name);
@@ -54,14 +54,16 @@ public class SpotifyRepository {
     }
 
     public Album createAlbum(String title, String artistName) {
-       boolean find = false;
         Artist art = createArtist(artistName);
-
+        for (Album album : albums){
+            if(album.getTitle().equals(title))
+                return album;
+        }
         Album a = new Album(title);
         albums.add(a);
         List<Album> ab = new ArrayList<>();
-        if(artistAlbumMap.containsKey(artistName))
-            ab = artistAlbumMap.get(artistName);
+        if(artistAlbumMap.containsKey(art))
+            ab = artistAlbumMap.get(art);
         ab.add(a);
         artistAlbumMap.put(art,ab);
         return a;
@@ -71,7 +73,7 @@ public class SpotifyRepository {
         boolean albumPresent = false;
         Album a = new Album();
         for(Album alb : albums){
-            if(alb.getTitle().equals(title)){
+            if(alb.getTitle().equals(albumName)){
                 albumPresent = true;
                 a = alb;
                 break;
@@ -192,7 +194,7 @@ public class SpotifyRepository {
                 break;
             }
         }
-        if (flag==false){
+        if (!flag){
             throw new Exception("Playlist does not exist");
         }
 
@@ -205,7 +207,7 @@ public class SpotifyRepository {
                 break;
             }
         }
-        if (flag2==false){
+        if (!flag2){
             throw new Exception("User does not exist");
         }
 
@@ -241,7 +243,7 @@ public class SpotifyRepository {
                 break;
             }
         }
-        if (flag2==false){
+        if (!flag2){
             throw new Exception("User does not exist");
         }
 
@@ -254,7 +256,7 @@ public class SpotifyRepository {
                 break;
             }
         }
-        if (flag==false){
+        if (!flag){
             throw new Exception("Song does not exist");
         }
 
